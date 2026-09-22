@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GISD Portal — Gemz Independent School District</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: light;
+    --ink:#182821;
+    --ink-soft:#3B4A42;
+    --paper:#EAEFE9;
+    --surface:#FFFFFF;
+    --surface-sunken:#F2F5EF;
+    --border:#D3DBD1;
+    --emerald:#1E6E55;
+    --emerald-dark:#123D30;
+    --emerald-tint:#E3F0EA;
+    --amethyst:#6C4A9C;
+    --amethyst-tint:#EFE9F6;
+    --garnet:#9C3B49;
+    --garnet-tint:#F7E7E9;
+    --gold:#B8892B;
+    --gold-tint:#FBF1DD;
+    --radius-s:6px;
+    --radius-m:10px;
+    --shadow: 0 1px 2px rgba(24,40,33,0.06), 0 6px 20px rgba(24,40,33,0.07);
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *,*::before,*::after{box-sizing:inherit}
+  html{scroll-padding-top: env(safe-area-inset-top, 0px);}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:'Public Sans', -apple-system, Segoe UI, sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Fraunces', Georgia, serif;}
+  a{color:inherit}
+  button{font-family:inherit}
+  ::selection{background:var(--gold-tint)}
+
+  /* ---------- Gem mark ---------- */
+  .gem{
+    width:38px;height:38px;position:relative;flex:none;
+  }
+  .gem svg{width:100%;height:100%;display:block}
+
+  /* ---------- Login screen ---------- */
+  #login-screen{
+    min-height:100vh;
+    display:grid;
+    grid-template-columns: 1.05fr 1fr;
+  }
+  @media (max-width:820px){
+    #login-screen{grid-template-columns:1fr;}
+    .login-aside{min-height:260px;}
+  }
+  .login-aside{
+    background:
+      radial-gradient(1200px 600px at -10% -20%, rgba(255,255,255,0.06), transparent 60%),
+      linear-gradient(160deg, var(--emerald-dark), var(--emerald) 78%);
+    color:#EFF6F2;
+    padding:56px 48px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    position:relative;
+    overflow:hidden;
+  }
+  .login-aside::after{
+    content:"";
+    position:absolute; right:-120px; bottom:-140px;
+    width:420px;height:420px;
+    background:conic-gradient(from 210deg, rgba(184,137,43,0.25), rgba(108,74,156,0.2), transparent 60%);
+    border-radius:50%;
+    filter:blur(2px);
+  }
+  .brand-row{display:flex; align-items:center; gap:14px; position:relative; z-index:1;}
+  .brand-name{font-size:15px; letter-spacing:0.02em; line-height:1.3;}
+  .brand-name b{display:block; font-family:'Fraunces',serif; font-size:22px; font-weight:600;}
+  .aside-hero{position:relative; z-index:1; margin-top:40px;}
+  .aside-hero h1{font-size:clamp(30px,4vw,42px); font-weight:600; line-height:1.12; margin:0 0 14px; max-width:9.5em;}
+  .aside-hero p{font-size:16px; line-height:1.6; color:#D9EAE1; max-width:34ch; margin:0;}
+  .notice-board{position:relative; z-index:1; border-top:1px solid rgba(255,255,255,0.18); padding-top:20px;}
+  .notice-board .label{font-size:12px; color:#BFE0D2; margin-bottom:10px;}
+  .notice{display:flex; gap:12px; font-size:13.5px; line-height:1.5; padding:9px 0; border-bottom:1px dashed rgba(255,255,255,0.14);}
+  .notice:last-child{border-bottom:none;}
+  .notice .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);margin-top:6px;flex:none;}
+
+  .login-main{
+    display:flex; align-items:center; justify-content:center;
+    padding:40px 28px;
+  }
+  .login-card{width:100%; max-width:380px;}
+  .login-card h2{font-size:26px; margin:0 0 6px; font-weight:600;}
+  .login-card .sub{color:var(--ink-soft); font-size:14.5px; margin:0 0 30px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:var(--ink-soft);}
+  .field input{
+    width:100%; padding:11px 13px; border-radius:var(--radius-s);
+    border:1.5px solid var(--border); background:var(--surface);
+    font-size:15px; color:var(--ink); font-family:inherit;
+  }
+  .field input:focus{outline:2px solid var(--emerald); outline-offset:1px; border-color:var(--emerald);}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:11px 18px; border-radius:var(--radius-s); border:none;
+    font-size:14.5px; font-weight:600; cursor:pointer; font-family:inherit;
+    transition:transform .08s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:focus-visible{outline:2px solid var(--ink); outline-offset:2px;}
+  .btn-primary{background:var(--emerald); color:#fff; width:100%; padding:12px 18px;}
+  .btn-primary:hover{background:var(--emerald-dark);}
+  .btn-ghost{background:transparent; color:var(--ink-soft); border:1.5px solid var(--border);}
+  .btn-ghost:hover{border-color:var(--ink-soft);}
+  .btn-amethyst{background:var(--amethyst); color:#fff;}
+  .btn-amethyst:hover{background:#553a80;}
+  .btn-danger{background:transparent; color:var(--garnet); border:1.5px solid var(--garnet-tint);}
+  .btn-danger:hover{background:var(--garnet-tint);}
+  .btn-small{padding:6px 12px; font-size:13px;}
+  .login-error{
+    background:var(--garnet-tint); color:#6E1E2A; border-radius:var(--radius-s);
+    padding:10px 12px; font-size:13.5px; margin-bottom:16px; display:none;
+  }
+  .login-hint{margin-top:22px; font-size:12.5px; color:var(--ink-soft); background:var(--surface-sunken); border:1px solid var(--border); border-radius:var(--radius-s); padding:12px 14px; line-height:1.6;}
+  .login-hint code{background:#fff; border:1px solid var(--border); padding:1px 5px; border-radius:4px;}
+
+  /* ---------- App shell ---------- */
+  #app-screen{display:none; min-height:100vh; min-height:100dvh;}
+  .shell{display:flex; min-height:100vh; min-height:100dvh;}
+  .sidebar{
+    width:230px; flex:none; background:var(--emerald-dark); color:#DCEAE3;
+    display:flex; flex-direction:column; padding:22px 16px;
+    padding-top: calc(22px + env(safe-area-inset-top, 0px));
+  }
+  .sidebar .brand-row{margin-bottom:26px; padding:0 4px;}
+  .sidebar .brand-row .brand-name b{font-size:16px;}
+  .sidebar .brand-row .brand-name span{font-size:11px; color:#9FC3B4;}
+  .role-pill{
+    display:inline-block; font-size:11px; font-weight:600; letter-spacing:.02em;
+    padding:3px 9px; border-radius:20px; margin:0 4px 18px;
+    background:rgba(255,255,255,0.12); color:#EAF5EF; width:fit-content;
+  }
+  .nav-link{
+    display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-s);
+    font-size:14px; font-weight:500; color:#CFE3D9; cursor:pointer; margin-bottom:2px; border:none; background:none; text-align:left; width:100%; font-family:inherit;
+  }
+  .nav-link:hover{background:rgba(255,255,255,0.07); color:#fff;}
+  .nav-link.active{background:rgba(255,255,255,0.16); color:#fff;}
+  .nav-link .ic{width:18px; text-align:center; flex:none; font-size:15px;}
+  .sidebar-foot{margin-top:auto; padding-top:16px; border-top:1px solid rgba(255,255,255,0.14);}
+  .who{font-size:13px; margin-bottom:10px; padding:0 4px;}
+  .who b{display:block; font-size:14px;}
+  .who span{color:#9FC3B4; font-size:12px;}
+
+  .content{
+    flex:1; padding:32px 40px; padding-top: calc(32px + env(safe-area-inset-top, 0px));
+    overflow-x:hidden; max-width:1180px;
+  }
+  @media (max-width:760px){
+    .shell{flex-direction:column;}
+    .sidebar{width:100%; flex-direction:row; align-items:center; flex-wrap:wrap; padding:14px 16px;}
+    .sidebar .brand-row{margin-bottom:0; margin-right:auto;}
+    .role-pill{display:none;}
+    .nav-link{width:auto; padding:8px 10px;}
+    .sidebar-foot{margin-top:10px; width:100%; border-top:none; padding-top:0; display:flex; align-items:center; justify-content:space-between;}
+    .who{margin-bottom:0;}
+    .content{padding:22px 16px;}
+  }
+  .page-head{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:24px; flex-wrap:wrap;}
+  .page-head h1{font-size:26px; font-weight:600; margin:0 0 4px;}
+  .page-head p{margin:0; color:var(--ink-soft); font-size:14px;}
+
+  .grid{display:grid; gap:16px;}
+  .grid-4{grid-template-columns:repeat(4,1fr);}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+  @media (max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr);} .grid-2{grid-template-columns:1fr;}}
+  @media (max-width:520px){.grid-4{grid-template-columns:1fr;}}
+
+  .stat-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:18px 20px; box-shadow:var(--shadow);}
+  .stat-card .num{font-family:'Fraunces',serif; font-size:30px; font-weight:600; line-height:1;}
+  .stat-card .lbl{font-size:12.5px; color:var(--ink-soft); margin-top:6px;}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); box-shadow:var(--shadow); padding:22px; margin-bottom:20px;}
+  .card h3{font-size:17px; margin:0 0 14px; font-weight:600;}
+  .card-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:12px; flex-wrap:wrap;}
+  .card-head h3{margin:0;}
+
+  table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  th{text-align:left; font-size:11.5px; text-transform:none; letter-spacing:.01em; color:var(--ink-soft); font-weight:600; padding:8px 10px; border-bottom:1.5px solid var(--border);}
+  td{padding:9px 10px; border-bottom:1px solid var(--border); vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  .table-wrap{overflow-x:auto;}
+  .row-actions{display:flex; gap:6px;}
+
+  .badge{display:inline-block; font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:20px;}
+  .badge-emerald{background:var(--emerald-tint); color:var(--emerald-dark);}
+  .badge-amethyst{background:var(--amethyst-tint); color:var(--amethyst);}
+  .badge-garnet{background:var(--garnet-tint); color:var(--garnet);}
+  .badge-gold{background:var(--gold-tint); color:#8A6820;}
+  .badge-grey{background:var(--surface-sunken); color:var(--ink-soft); border:1px solid var(--border);}
+
+  .empty{padding:34px 20px; text-align:center; color:var(--ink-soft); font-size:14px;}
+  .empty .big{font-size:28px; margin-bottom:6px;}
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(10px);
+    background:var(--ink); color:#fff; padding:11px 18px; border-radius:var(--radius-s);
+    font-size:13.5px; box-shadow:var(--shadow); opacity:0; pointer-events:none; transition:.2s ease;
+    z-index:80; bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  /* modal */
+  .modal-bg{position:fixed; inset:0; background:rgba(20,30,25,0.42); display:none; align-items:center; justify-content:center; z-index:60; padding:20px;}
+  .modal-bg.show{display:flex;}
+  .modal{background:#fff; border-radius:var(--radius-m); width:100%; max-width:420px; padding:26px; box-shadow:0 20px 60px rgba(0,0,0,0.25); max-height:88vh; overflow-y:auto;}
+  .modal h3{margin:0 0 4px; font-size:19px;}
+  .modal .sub{color:var(--ink-soft); font-size:13px; margin:0 0 18px;}
+  .modal-actions{display:flex; gap:10px; margin-top:22px;}
+  .modal-actions .btn{flex:1;}
+  select{width:100%; padding:10px 12px; border-radius:var(--radius-s); border:1.5px solid var(--border); font-size:14px; font-family:inherit; background:#fff; color:var(--ink);}
+  .field select{width:100%;}
+  .checkbox-list{max-height:180px; overflow-y:auto; border:1px solid var(--border); border-radius:var(--radius-s); padding:8px 10px; background:var(--surface-sunken);}
+  .checkbox-row{display:flex; align-items:center; gap:8px; padding:5px 2px; font-size:13.5px;}
+
+  .attend-grid{display:flex; gap:8px; flex-wrap:wrap;}
+  .attend-btn{padding:6px 12px; border-radius:20px; font-size:12.5px; font-weight:600; border:1.5px solid var(--border); background:#fff; cursor:pointer;}
+  .attend-btn.p.on{background:var(--emerald-tint); border-color:var(--emerald); color:var(--emerald-dark);}
+  .attend-btn.a.on{background:var(--garnet-tint); border-color:var(--garnet); color:var(--garnet);}
+  .attend-btn.t.on{background:var(--gold-tint); border-color:var(--gold); color:#8A6820;}
+
+  .tabs{display:flex; gap:4px; border-bottom:1.5px solid var(--border); margin-bottom:20px; flex-wrap:wrap;}
+  .tab{padding:9px 14px; font-size:13.5px; font-weight:600; color:var(--ink-soft); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1.5px;}
+  .tab.active{color:var(--emerald-dark); border-bottom-color:var(--emerald);}
+
+  .kv{font-size:13.5px; color:var(--ink-soft); margin:2px 0 0;}
+  .link-btn{background:none; border:none; color:var(--emerald-dark); font-weight:600; cursor:pointer; font-size:13.5px; padding:0; font-family:inherit;}
+  .link-btn.danger{color:var(--garnet);}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="login-screen">
+  <aside class="login-aside">
+    <div>
+      <div class="brand-row">
+        <div class="gem">
+          <svg viewBox="0 0 40 40"><polygon points="20,2 32,13 26,38 14,38 8,13" fill="#EFC94C" stroke="#8A6820" stroke-width="0.6"/><polygon points="20,2 32,13 20,17" fill="#F6DE85"/><polygon points="20,2 8,13 20,17" fill="#D9AE33"/><polygon points="8,13 20,17 14,38" fill="#C99A24"/><polygon points="32,13 20,17 26,38" fill="#B8892B"/><polygon points="20,17 14,38 26,38" fill="#E0B646"/></svg>
+        </div>
+        <div class="brand-name">Gemz Independent<br>School District<b>GISD Portal</b></div>
+      </div>
+      <div class="aside-hero">
+        <h1>One portal for every classroom in the district.</h1>
+        <p>Grades, attendance, rosters, and schedules — kept in one place for admins, teachers, students, and families.</p>
+      </div>
+    </div>
+    <div class="notice-board">
+      <div class="label">DISTRICT NOTICES</div>
+      <div class="notice"><span class="dot"></span>Report cards for this term post automatically once a teacher finalizes grades.</div>
+      <div class="notice"><span class="dot"></span>Attendance is taken each period — check with your teacher if a mark looks off.</div>
+      <div class="notice"><span class="dot"></span>Lost your login? Ask your district admin to look it up or reset it.</div>
+    </div>
+  </aside>
+  <main class="login-main">
+    <div class="login-card">
+      <h2>Sign in</h2>
+      <p class="sub">Enter the username and password your admin gave you.</p>
+      <div class="login-error" id="login-error"></div>
+      <form id="login-form" autocomplete="off">
+        <div class="field">
+          <label for="login-username">Username</label>
+          <input id="login-username" type="text" autocomplete="username" placeholder="e.g. jlin">
+        </div>
+        <div class="field">
+          <label for="login-password">Password</label>
+          <input id="login-password" type="password" autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+      </form>
+      <div class="login-hint">First time here? This portal ships with a starter admin login:<br><code>admin</code> / <code>admin123</code><br>Sign in and go to <b>Manage users</b> to add real accounts — everything is saved right in this browser.</div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ APP SCREEN ============ -->
+<div id="app-screen">
+  <div class="shell">
+    <nav class="sidebar" id="sidebar"></nav>
+    <div class="content" id="content"></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-bg"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ======================= STORAGE LAYER ======================= */
+const DB_KEY = 'gisd_db_v1';
+const SESSION_KEY = 'gisd_session_v1';
+
+function uid(prefix){ return prefix + '_' + Math.random().toString(36).slice(2,9); }
+
+function loadDB(){
+  try{
+    const raw = localStorage.getItem(DB_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){ console.error('GISD storage read failed', e); }
+  return seedDB();
+}
+function saveDB(){
+  try{ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+  catch(e){ console.error('GISD storage write failed', e); toast('Could not save — your browser storage may be full or blocked.'); }
+}
+
+function seedDB(){
+  const teacherId = uid('u');
+  const s1=uid('s'), s2=uid('s'), s3=uid('s'), s4=uid('s'), s5=uid('s');
+  const classId = uid('c');
+  const studentUserLinked = s1;
+  const data = {
+    users: [
+      {id: uid('u'), username:'admin', password:'admin123', fullName:'District Admin', role:'admin'},
+      {id: teacherId, username:'teacher1', password:'teach123', fullName:'Ms. Avery Stone', role:'teacher'},
+      {id: uid('u'), username:'student1', password:'learn123', fullName:'Jasper Lin', role:'student', linkedStudentId: studentUserLinked},
+      {id: uid('u'), username:'parent1', password:'family123', fullName:'Dana Lin', role:'parent', linkedStudentId: studentUserLinked},
+    ],
+    students: [
+      {id:s1, name:'Jasper Lin', grade:'10', homeroom:'10-A', guardian:'Dana Lin'},
+      {id:s2, name:'Wren Castillo', grade:'10', homeroom:'10-A', guardian:'Maribel Castillo'},
+      {id:s3, name:'Marlowe Bijoux', grade:'10', homeroom:'10-B', guardian:'Colette Bijoux'},
+      {id:s4, name:'Odette Quinn', grade:'10', homeroom:'10-A', guardian:'Priya Quinn'},
+      {id:s5, name:'Theo Marchetti', grade:'10', homeroom:'10-B', guardian:'Nico Marchetti'},
+    ],
+    classes: [
+      {id:classId, name:'Algebra II', subject:'Mathematics', teacherId, period:'3', room:'214', studentIds:[s1,s2,s3,s4,s5]}
+    ],
+    grades: { [classId]: { assignments:[
+        {id:uid('a'), name:'Homework 1', points:20},
+        {id:uid('a'), name:'Quiz — Quadratics', points:50},
+      ], scores:{} } },
+    attendance: { [classId]: {} }
+  };
+  localStorage.setItem(DB_KEY, JSON.stringify(data));
+  return data;
+}
+
+let db = loadDB();
+
+function getSession(){
+  try{ return JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null'); }catch(e){ return null; }
+}
+function setSession(userId){ sessionStorage.setItem(SESSION_KEY, JSON.stringify({userId})); }
+function clearSession(){ sessionStorage.removeItem(SESSION_KEY); }
+
+function currentUser(){
+  const s = getSession();
+  if(!s) return null;
+  return db.users.find(u=>u.id===s.userId) || null;
+}
+
+/* ======================= UTIL / UI HELPERS ======================= */
+function esc(str){
+  return String(str==null?'':str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=>t.classList.remove('show'), 2600);
+}
+function closeModal(){ document.getElementById('modal-bg').classList.remove('show'); document.getElementById('modal').innerHTML=''; }
+function openModal(html){
+  document.getElementById('modal').innerHTML = html;
+  document.getElementById('modal-bg').classList.add('show');
+}
+document.getElementById('modal-bg').addEventListener('click', e=>{ if(e.target.id==='modal-bg') closeModal(); });
+
+function roleLabel(r){
+  return {admin:'District Admin', teacher:'Teacher', student:'Student', parent:'Parent / Guardian'}[r] || r;
+}
+function roleBadgeClass(r){
+  return {admin:'badge-amethyst', teacher:'badge-emerald', student:'badge-gold', parent:'badge-grey'}[r] || 'badge-grey';
+}
+function studentById(id){ return db.students.find(s=>s.id===id); }
+function classById(id){ return db.classes.find(c=>c.id===id); }
+function teacherClasses(teacherId){ return db.classes.filter(c=>c.teacherId===teacherId); }
+function classesForStudent(studentId){ return db.classes.filter(c=>c.studentIds.includes(studentId)); }
+
+/* ======================= LOGIN ======================= */
+document.getElementById('login-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const u = document.getElementById('login-username').value.trim();
+  const p = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  const match = db.users.find(x=>x.username.toLowerCase()===u.toLowerCase() && x.password===p);
+  if(!match){
+    errEl.textContent = 'That username and password combination isn\'t on file. Double-check with your admin.';
+    errEl.style.display='block';
+    return;
+  }
+  errEl.style.display='none';
+  setSession(match.id);
+  boot();
+});
+
+function logout(){
+  clearSession();
+  document.getElementById('login-username').value='';
+  document.getElementById('login-password').value='';
+  document.getElementById('login-error').style.display='none';
+  document.getElementById('app-screen').style.display='none';
+  document.getElementById('login-screen').style.display='grid';
+}
+
+/* ======================= NAV CONFIG ======================= */
+const NAV = {
+  admin: [
+    {key:'dashboard', label:'Dashboard', icon:'◆'},
+    {key:'users', label:'Manage users', icon:'▤'},
+    {key:'students', label:'Student directory', icon:'▥'},
+    {key:'classes', label:'Classes & schedule', icon:'▦'},
+  ],
+  teacher: [
+    {key:'dashboard', label:'Dashboard', icon:'◆'},
+    {key:'my-classes', label:'My classes', icon:'▤'},
+  ],
+  student: [
+    {key:'dashboard', label:'Dashboard', icon:'◆'},
+    {key:'grades', label:'My grades', icon:'▤'},
+    {key:'attendance', label:'My attendance', icon:'▥'},
+    {key:'schedule', label:'My schedule', icon:'▦'},
+  ],
+  parent: [
+    {key:'dashboard', label:'Dashboard', icon:'◆'},
+    {key:'grades', label:"Child's grades", icon:'▤'},
+    {key:'attendance', label:"Child's attendance", icon:'▥'},
+    {key:'schedule', label:"Child's schedule", icon:'▦'},
+  ],
+};
+let activePage = 'dashboard';
+
+/* ======================= BOOT / RENDER SHELL ======================= */
+function boot(){
+  const user = currentUser();
+  if(!user){
+    document.getElementById('app-screen').style.display='none';
+    document.getElementById('login-screen').style.display='grid';
+    return;
+  }
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app-screen').style.display='block';
+  activePage = NAV[user.role][0].key;
+  renderSidebar(user);
+  renderPage();
+}
+
+function renderSidebar(user){
+  const items = NAV[user.role];
+  const nav = document.getElementById('sidebar');
+  nav.innerHTML = `
+    <div class="brand-row">
+      <div class="gem" style="width:30px;height:30px;">
+        <svg viewBox="0 0 40 40"><polygon points="20,2 32,13 26,38 14,38 8,13" fill="#EFC94C" stroke="#8A6820" stroke-width="0.6"/><polygon points="20,2 32,13 20,17" fill="#F6DE85"/><polygon points="20,2 8,13 20,17" fill="#D9AE33"/><polygon points="8,13 20,17 14,38" fill="#C99A24"/><polygon points="32,13 20,17 26,38" fill="#B8892B"/><polygon points="20,17 14,38 26,38" fill="#E0B646"/></svg>
+      </div>
+      <div class="brand-name"><b>GISD Portal</b><span>Gemz Independent SD</span></div>
+    </div>
+    <div class="role-pill">${esc(roleLabel(user.role))}</div>
+    ${items.map(it=>`<button class="nav-link ${it.key===activePage?'active':''}" onclick="goTo('${it.key}')"><span class="ic">${it.icon}</span>${esc(it.label)}</button>`).join('')}
+    <div class="sidebar-foot">
+      <div class="who"><b>${esc(user.fullName)}</b><span>@${esc(user.username)}</span></div>
+      <button class="btn btn-ghost btn-small" style="width:100%;color:#DCEAE3;border-color:rgba(255,255,255,0.28);" onclick="logout()">Sign out</button>
+    </div>
+  `;
+}
+
+function goTo(key){
+  activePage = key;
+  renderSidebar(currentUser());
+  renderPage();
+}
+
+function renderPage(){
+  const user = currentUser();
+  if(!user) return boot();
+  const content = document.getElementById('content');
+  const routes = {
+    admin: {dashboard:pageAdminDashboard, users:pageUsers, students:pageStudents, classes:pageClasses},
+    teacher: {dashboard:pageTeacherDashboard, 'my-classes':pageMyClasses},
+    student: {dashboard:pageStudentDashboard, grades:pageStudentGrades, attendance:pageStudentAttendance, schedule:pageStudentSchedule},
+    parent: {dashboard:pageStudentDashboard, grades:pageStudentGrades, attendance:pageStudentAttendance, schedule:pageStudentSchedule},
+  };
+  const fn = (routes[user.role] && routes[user.role][activePage]) || routes[user.role].dashboard;
+  content.innerHTML = fn(user);
+}
+
+/* ======================= ADMIN: DASHBOARD ======================= */
+function pageAdminDashboard(user){
+  const totalStudents = db.students.length;
+  const totalTeachers = db.users.filter(u=>u.role==='teacher').length;
+  const totalClasses = db.classes.length;
+  const totalUsers = db.users.length;
+  return `
+    <div class="page-head">
+      <div><h1>District overview</h1><p>Welcome back, ${esc(user.fullName)}.</p></div>
+    </div>
+    <div class="grid grid-4" style="margin-bottom:24px;">
+      <div class="stat-card"><div class="num">${totalStudents}</div><div class="lbl">Enrolled students</div></div>
+      <div class="stat-card"><div class="num">${totalTeachers}</div><div class="lbl">Teachers</div></div>
+      <div class="stat-card"><div class="num">${totalClasses}</div><div class="lbl">Active classes</div></div>
+      <div class="stat-card"><div class="num">${totalUsers}</div><div class="lbl">Portal accounts</div></div>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Recent accounts</h3>
+        ${db.users.slice(-5).reverse().map(u=>`
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
+            <div><b style="font-size:13.5px;">${esc(u.fullName)}</b><div class="kv">@${esc(u.username)}</div></div>
+            <span class="badge ${roleBadgeClass(u.role)}">${esc(roleLabel(u.role))}</span>
+          </div>`).join('') || '<div class="empty">No accounts yet.</div>'}
+      </div>
+      <div class="card">
+        <h3>Classes at a glance</h3>
+        ${db.classes.map(c=>{
+          const t = db.users.find(u=>u.id===c.teacherId);
+          return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
+            <div><b style="font-size:13.5px;">${esc(c.name)}</b><div class="kv">Period ${esc(c.period)} · Room ${esc(c.room)}</div></div>
+            <span class="badge badge-grey">${t?esc(t.fullName):'Unassigned'}</span>
+          </div>`;
+        }).join('') || '<div class="empty">No classes yet.</div>'}
+      </div>
+    </div>
+  `;
+}
+
+/* ======================= ADMIN: MANAGE USERS ======================= */
+function pageUsers(user){
+  return `
+    <div class="page-head">
+      <div><h1>Manage users</h1><p>Create and edit the logins people use to sign in to this portal.</p></div>
+      <button class="btn btn-amethyst" onclick="openUserModal()">+ Add user</button>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Full name</th><th>Username</th><th>Role</th><th>Linked student</th><th></th></tr></thead>
+        <tbody>
+          ${db.users.map(u=>{
+            const linked = u.linkedStudentId ? studentById(u.linkedStudentId) : null;
+            return `<tr>
+              <td><b>${esc(u.fullName)}</b></td>
+              <td>@${esc(u.username)}</td>
+              <td><span class="badge ${roleBadgeClass(u.role)}">${esc(roleLabel(u.role))}</span></td>
+              <td>${linked ? esc(linked.name) : '<span class="kv">—</span>'}</td>
+              <td class="row-actions">
+                <button class="link-btn" onclick="openUserModal('${u.id}')">Edit</button>
+                <button class="link-btn danger" onclick="deleteUser('${u.id}')">Remove</button>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+      </div>
+      ${db.users.length===0 ? '<div class="empty">No users yet — add the first one above.</div>' : ''}
+    </div>
+  `;
+}
+
+function openUserModal(userId){
+  const editing = userId ? db.users.find(u=>u.id===userId) : null;
+  const studentOptions = db.students.map(s=>`<option value="${s.id}" ${editing&&editing.linkedStudentId===s.id?'selected':''}>${esc(s.name)}</option>`).join('');
+  openModal(`
+    <h3>${editing?'Edit user':'Add a new user'}</h3>
+    <p class="sub">${editing?'Update this account\'s details.':'This creates a login the person can use right away.'}</p>
+    <div class="field"><label>Full name</label><input id="f-fullname" value="${editing?esc(editing.fullName):''}" placeholder="e.g. Avery Stone"></div>
+    <div class="field"><label>Username</label><input id="f-username" value="${editing?esc(editing.username):''}" placeholder="e.g. astone"></div>
+    <div class="field"><label>Password</label><input id="f-password" value="${editing?esc(editing.password):''}" placeholder="Set a password"></div>
+    <div class="field"><label>Role</label>
+      <select id="f-role" onchange="document.getElementById('linked-wrap').style.display=(this.value==='student'||this.value==='parent')?'block':'none'">
+        ${['admin','teacher','student','parent'].map(r=>`<option value="${r}" ${editing&&editing.role===r?'selected':''}>${roleLabel(r)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="field" id="linked-wrap" style="display:${editing&&(editing.role==='student'||editing.role==='parent')?'block':'none'}">
+      <label>Linked student record</label>
+      <select id="f-linked"><option value="">— none —</option>${studentOptions}</select>
+      <p class="kv" style="margin-top:6px;">Lets this login see one student's grades, attendance, and schedule.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveUser(${editing?`'${editing.id}'`:'null'})">${editing?'Save changes':'Create user'}</button>
+    </div>
+  `);
+}
+
+function saveUser(userId){
+  const fullName = document.getElementById('f-fullname').value.trim();
+  const username = document.getElementById('f-username').value.trim();
+  const password = document.getElementById('f-password').value;
+  const role = document.getElementById('f-role').value;
+  const linkedEl = document.getElementById('f-linked');
+  const linkedStudentId = linkedEl ? linkedEl.value : '';
+
+  if(!fullName || !username || !password){ toast('Full name, username, and password are all required.'); return; }
+  const dupe = db.users.find(u=>u.username.toLowerCase()===username.toLowerCase() && u.id!==userId);
+  if(dupe){ toast('That username is already taken.'); return; }
+
+  if(userId){
+    const u = db.users.find(x=>x.id===userId);
+    Object.assign(u, {fullName, username, password, role});
+    if(role==='student'||role==='parent') u.linkedStudentId = linkedStudentId || undefined; else delete u.linkedStudentId;
+  }else{
+    const nu = {id: uid('u'), fullName, username, password, role};
+    if((role==='student'||role==='parent') && linkedStudentId) nu.linkedStudentId = linkedStudentId;
+    db.users.push(nu);
+  }
+  saveDB();
+  closeModal();
+  toast(userId ? 'User updated.' : 'User created.');
+  renderPage();
+}
+
+function deleteUser(userId){
+  const u = db.users.find(x=>x.id===userId);
+  if(!u) return;
+  if(u.role==='admin' && db.users.filter(x=>x.role==='admin').length===1){
+    toast("Can't remove the only remaining admin account.");
+    return;
+  }
+  if(!confirm(`Remove the login for ${u.fullName}? This can't be undone.`)) return;
+  db.users = db.users.filter(x=>x.id!==userId);
+  saveDB();
+  toast('User removed.');
+  renderPage();
+}
+
+/* ======================= ADMIN: STUDENT DIRECTORY ======================= */
+function pageStudents(){
+  return `
+    <div class="page-head">
+      <div><h1>Student directory</h1><p>The district's master list of enrolled students.</p></div>
+      <button class="btn btn-amethyst" onclick="openStudentModal()">+ Add student</button>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Name</th><th>Grade</th><th>Homeroom</th><th>Guardian</th><th>Classes</th><th></th></tr></thead>
+        <tbody>
+          ${db.students.map(s=>`
+            <tr>
+              <td><b>${esc(s.name)}</b></td>
+              <td>${esc(s.grade)}</td>
+              <td>${esc(s.homeroom)}</td>
+              <td>${esc(s.guardian||'—')}</td>
+              <td>${classesForStudent(s.id).map(c=>esc(c.name)).join(', ') || '<span class="kv">—</span>'}</td>
+              <td class="row-actions">
+                <button class="link-btn" onclick="openStudentModal('${s.id}')">Edit</button>
+                <button class="link-btn danger" onclick="deleteStudent('${s.id}')">Remove</button>
+              </td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+      </div>
+      ${db.students.length===0 ? '<div class="empty">No students yet — add the first one above.</div>' : ''}
+    </div>
+  `;
+}
+
+function openStudentModal(studentId){
+  const editing = studentId ? studentById(studentId) : null;
+  openModal(`
+    <h3>${editing?'Edit student':'Add a student'}</h3>
+    <p class="sub">${editing?'Update this student\'s record.':'Adds a student to the district directory.'}</p>
+    <div class="field"><label>Full name</label><input id="s-name" value="${editing?esc(editing.name):''}" placeholder="e.g. Wren Castillo"></div>
+    <div class="field"><label>Grade level</label><input id="s-grade" value="${editing?esc(editing.grade):''}" placeholder="e.g. 10"></div>
+    <div class="field"><label>Homeroom</label><input id="s-homeroom" value="${editing?esc(editing.homeroom):''}" placeholder="e.g. 10-A"></div>
+    <div class="field"><label>Guardian name</label><input id="s-guardian" value="${editing?esc(editing.guardian||''):''}" placeholder="e.g. Maribel Castillo"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveStudent(${editing?`'${editing.id}'`:'null'})">${editing?'Save changes':'Add student'}</button>
+    </div>
+  `);
+}
+
+function saveStudent(studentId){
+  const name = document.getElementById('s-name').value.trim();
+  const grade = document.getElementById('s-grade').value.trim();
+  const homeroom = document.getElementById('s-homeroom').value.trim();
+  const guardian = document.getElementById('s-guardian').value.trim();
+  if(!name){ toast('A name is required.'); return; }
+  if(studentId){
+    Object.assign(studentById(studentId), {name, grade, homeroom, guardian});
+  }else{
+    db.students.push({id: uid('s'), name, grade, homeroom, guardian});
+  }
+  saveDB();
+  closeModal();
+  toast(studentId ? 'Student updated.' : 'Student added.');
+  renderPage();
+}
+
+function deleteStudent(studentId){
+  if(!confirm('Remove this student from the directory? They will also be removed from any class rosters.')) return;
+  db.students = db.students.filter(s=>s.id!==studentId);
+  db.classes.forEach(c=>{ c.studentIds = c.studentIds.filter(id=>id!==studentId); });
+  saveDB();
+  toast('Student removed.');
+  renderPage();
+}
+
+/* ======================= ADMIN: CLASSES & SCHEDULE ======================= */
+function pageClasses(){
+  const teachers = db.users.filter(u=>u.role==='teacher');
+  return `
+    <div class="page-head">
+      <div><h1>Classes & schedule</h1><p>Set up class periods, assign a teacher, and build the roster.</p></div>
+      <button class="btn btn-amethyst" onclick="openClassModal()">+ Add class</button>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Class</th><th>Subject</th><th>Teacher</th><th>Period</th><th>Room</th><th>Roster</th><th></th></tr></thead>
+        <tbody>
+          ${db.classes.map(c=>{
+            const t = db.users.find(u=>u.id===c.teacherId);
+            return `<tr>
+              <td><b>${esc(c.name)}</b></td>
+              <td>${esc(c.subject||'—')}</td>
+              <td>${t?esc(t.fullName):'<span class="kv">Unassigned</span>'}</td>
+              <td>${esc(c.period)}</td>
+              <td>${esc(c.room)}</td>
+              <td>${c.studentIds.length} student${c.studentIds.length===1?'':'s'}</td>
+              <td class="row-actions">
+                <button class="link-btn" onclick="openClassModal('${c.id}')">Edit</button>
+                <button class="link-btn danger" onclick="deleteClass('${c.id}')">Remove</button>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+      </div>
+      ${db.classes.length===0 ? `<div class="empty">${teachers.length===0?'Add a teacher account first, then create a class.':'No classes yet — add the first one above.'}</div>` : ''}
+    </div>
+  `;
+}
+
+function openClassModal(classId){
+  const editing = classId ? classById(classId) : null;
+  const teachers = db.users.filter(u=>u.role==='teacher');
+  openModal(`
+    <h3>${editing?'Edit class':'Add a class'}</h3>
+    <p class="sub">${editing?'Update this class\'s details and roster.':'Creates a class period and assigns a teacher.'}</p>
+    <div class="field"><label>Class name</label><input id="c-name" value="${editing?esc(editing.name):''}" placeholder="e.g. Algebra II"></div>
+    <div class="field"><label>Subject</label><input id="c-subject" value="${editing?esc(editing.subject||''):''}" placeholder="e.g. Mathematics"></div>
+    <div class="field"><label>Teacher</label>
+      <select id="c-teacher">
+        <option value="">— unassigned —</option>
+        ${teachers.map(t=>`<option value="${t.id}" ${editing&&editing.teacherId===t.id?'selected':''}>${esc(t.fullName)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="field"><label>Period</label><input id="c-period" value="${editing?esc(editing.period):''}" placeholder="e.g. 3"></div>
+    <div class="field"><label>Room</label><input id="c-room" value="${editing?esc(editing.room):''}" placeholder="e.g. 214"></div>
+    <div class="field"><label>Roster</label>
+      <div class="checkbox-list">
+        ${db.students.length===0 ? '<div class="kv" style="padding:4px 2px;">No students in the directory yet.</div>' : db.students.map(s=>`
+          <label class="checkbox-row"><input type="checkbox" value="${s.id}" ${editing&&editing.studentIds.includes(s.id)?'checked':''} class="c-roster-box"> ${esc(s.name)} <span class="kv">· ${esc(s.homeroom)}</span></label>
+        `).join('')}
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveClass(${editing?`'${editing.id}'`:'null'})">${editing?'Save changes':'Add class'}</button>
+    </div>
+  `);
+}
+
+function saveClass(classId){
+  const name = document.getElementById('c-name').value.trim();
+  const subject = document.getElementById('c-subject').value.trim();
+  const teacherId = document.getElementById('c-teacher').value;
+  const period = document.getElementById('c-period').value.trim();
+  const room = document.getElementById('c-room').value.trim();
+  const studentIds = Array.from(document.querySelectorAll('.c-roster-box:checked')).map(el=>el.value);
+  if(!name){ toast('A class name is required.'); return; }
+  if(classId){
+    const c = classById(classId);
+    Object.assign(c, {name, subject, teacherId, period, room, studentIds});
+  }else{
+    const newId = uid('c');
+    db.classes.push({id:newId, name, subject, teacherId, period, room, studentIds});
+    db.grades[newId] = {assignments:[], scores:{}};
+    db.attendance[newId] = {};
+  }
+  saveDB();
+  closeModal();
+  toast(classId ? 'Class updated.' : 'Class added.');
+  renderPage();
+}
+
+function deleteClass(classId){
+  if(!confirm('Remove this class? Its grades and attendance history will be deleted too.')) return;
+  db.classes = db.classes.filter(c=>c.id!==classId);
+  delete db.grades[classId];
+  delete db.attendance[classId];
+  saveDB();
+  toast('Class removed.');
+  renderPage();
+}
+
+/* ======================= TEACHER ======================= */
+function pageTeacherDashboard(user){
+  const classes = teacherClasses(user.id);
+  const studentCount = new Set(classes.flatMap(c=>c.studentIds)).size;
+  return `
+    <div class="page-head"><div><h1>Welcome, ${esc(user.fullName)}</h1><p>Here's what's on your schedule.</p></div></div>
+    <div class="grid grid-4" style="margin-bottom:24px;">
+      <div class="stat-card"><div class="num">${classes.length}</div><div class="lbl">Classes you teach</div></div>
+      <div class="stat-card"><div class="num">${studentCount}</div><div class="lbl">Students total</div></div>
+    </div>
+    <div class="card">
+      <h3>Your classes</h3>
+      ${classes.map(c=>`
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">
+          <div><b style="font-size:14px;">${esc(c.name)}</b><div class="kv">Period ${esc(c.period)} · Room ${esc(c.room)} · ${c.studentIds.length} students</div></div>
+          <button class="btn btn-ghost btn-small" onclick="goTo('my-classes'); openClassWorkspace('${c.id}')">Open</button>
+        </div>`).join('') || '<div class="empty">No classes assigned to you yet — ask your admin to add one.</div>'}
+    </div>
+  `;
+}
+
+let teacherWorkspaceClassId = null;
+let teacherWorkspaceTab = 'gradebook';
+
+function pageMyClasses(user){
+  const classes = teacherClasses(user.id);
+  if(classes.length===0){
+    return `<div class="page-head"><div><h1>My classes</h1></div></div><div class="card"><div class="empty">No classes assigned to you yet — ask your admin to add one.</div></div>`;
+  }
+  if(!teacherWorkspaceClassId || !classes.find(c=>c.id===teacherWorkspaceClassId)) teacherWorkspaceClassId = classes[0].id;
+  const c = classById(teacherWorkspaceClassId);
+  return `
+    <div class="page-head"><div><h1>My classes</h1><p>Pick a class, then manage its gradebook or attendance.</p></div></div>
+    <div class="tabs" style="border-bottom:none; margin-bottom:14px;">
+      ${classes.map(cl=>`<div class="tab ${cl.id===teacherWorkspaceClassId?'active':''}" style="border:1.5px solid var(--border); border-radius:20px; padding:6px 14px; ${cl.id===teacherWorkspaceClassId?'background:var(--emerald-tint);border-color:var(--emerald);color:var(--emerald-dark);':''}" onclick="openClassWorkspace('${cl.id}')">${esc(cl.name)}</div>`).join('')}
+    </div>
+    <div class="tabs">
+      <div class="tab ${teacherWorkspaceTab==='gradebook'?'active':''}" onclick="teacherWorkspaceTab='gradebook'; renderPage();">Gradebook</div>
+      <div class="tab ${teacherWorkspaceTab==='attendance'?'active':''}" onclick="teacherWorkspaceTab='attendance'; renderPage();">Attendance</div>
+      <div class="tab ${teacherWorkspaceTab==='roster'?'active':''}" onclick="teacherWorkspaceTab='roster'; renderPage();">Roster</div>
+    </div>
+    ${teacherWorkspaceTab==='gradebook' ? renderGradebook(c) : teacherWorkspaceTab==='attendance' ? renderAttendance(c) : renderRosterView(c)}
+  `;
+}
+function openClassWorkspace(classId){ teacherWorkspaceClassId = classId; teacherWorkspaceTab='gradebook'; renderPage(); }
+
+function renderRosterView(c){
+  return `<div class="card">
+    <h3>${esc(c.name)} roster</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Student</th><th>Grade</th><th>Homeroom</th></tr></thead>
+      <tbody>${c.studentIds.map(id=>{const s=studentById(id); return s?`<tr><td>${esc(s.name)}</td><td>${esc(s.grade)}</td><td>${esc(s.homeroom)}</td></tr>`:'';}).join('') || '<tr><td class="empty" colspan="3">No students on this roster yet.</td></tr>'}</tbody>
+    </table></div>
+  </div>`;
+}
+
+function renderGradebook(c){
+  const gb = db.grades[c.id] || {assignments:[], scores:{}};
+  return `
+    <div class="card">
+      <div class="card-head"><h3>Gradebook — ${esc(c.name)}</h3><button class="btn btn-amethyst btn-small" onclick="openAssignmentModal('${c.id}')">+ Add assignment</button></div>
+      ${gb.assignments.length===0 || c.studentIds.length===0 ? `<div class="empty">${c.studentIds.length===0?'Add students to this class\'s roster first.':'No assignments yet — add one above.'}</div>` : `
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Student</th>${gb.assignments.map(a=>`<th>${esc(a.name)}<br><span class="kv" style="font-weight:400;">/${a.points}</span></th>`).join('')}<th>Average</th></tr></thead>
+        <tbody>
+          ${c.studentIds.map(sid=>{
+            const s = studentById(sid); if(!s) return '';
+            let earned=0, possible=0;
+            const cells = gb.assignments.map(a=>{
+              const val = (gb.scores[sid]||{})[a.id];
+              if(val!==undefined && val!==''){ earned += Number(val); possible += Number(a.points); }
+              return `<td><input type="number" min="0" max="${a.points}" value="${val!==undefined?val:''}" style="width:64px;padding:5px 7px;border:1.5px solid var(--border);border-radius:5px;font-size:13px;" onchange="setScore('${c.id}','${sid}','${a.id}', this.value)"></td>`;
+            }).join('');
+            const pct = possible>0 ? Math.round((earned/possible)*100) : null;
+            return `<tr><td><b>${esc(s.name)}</b></td>${cells}<td>${pct===null?'<span class="kv">—</span>':`<span class="badge ${pct>=90?'badge-emerald':pct>=70?'badge-gold':'badge-garnet'}">${pct}%</span>`}</td></tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+      </div>`}
+    </div>
+  `;
+}
+
+function openAssignmentModal(classId){
+  openModal(`
+    <h3>Add assignment</h3>
+    <p class="sub">This adds a new gradable column to the gradebook.</p>
+    <div class="field"><label>Assignment name</label><input id="a-name" placeholder="e.g. Chapter 4 Test"></div>
+    <div class="field"><label>Points possible</label><input id="a-points" type="number" min="1" value="100"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAssignment('${classId}')">Add</button>
+    </div>
+  `);
+}
+function saveAssignment(classId){
+  const name = document.getElementById('a-name').value.trim();
+  const points = Number(document.getElementById('a-points').value) || 100;
+  if(!name){ toast('Name the assignment first.'); return; }
+  db.grades[classId].assignments.push({id:uid('a'), name, points});
+  saveDB();
+  closeModal();
+  toast('Assignment added.');
+  renderPage();
+}
+function setScore(classId, studentId, assignmentId, value){
+  const gb = db.grades[classId];
+  if(!gb.scores[studentId]) gb.scores[studentId] = {};
+  gb.scores[studentId][assignmentId] = value===''? '' : Number(value);
+  saveDB();
+}
+
+function renderAttendance(c){
+  const today = new Date().toISOString().slice(0,10);
+  if(!renderAttendance._date) renderAttendance._date = today;
+  const date = renderAttendance._date;
+  const att = db.attendance[c.id] || {};
+  const dayRecord = att[date] || {};
+  return `
+    <div class="card">
+      <div class="card-head">
+        <h3>Attendance — ${esc(c.name)}</h3>
+        <input type="date" value="${date}" style="padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;" onchange="renderAttendance._date=this.value; renderPage();">
+      </div>
+      ${c.studentIds.length===0 ? '<div class="empty">Add students to this class\'s roster first.</div>' : `
+      <div class="table-wrap"><table>
+        <thead><tr><th>Student</th><th>Mark</th></tr></thead>
+        <tbody>
+        ${c.studentIds.map(sid=>{
+          const s = studentById(sid); if(!s) return '';
+          const status = dayRecord[sid] || '';
+          return `<tr><td><b>${esc(s.name)}</b></td><td>
+            <div class="attend-grid">
+              <button class="attend-btn p ${status==='P'?'on':''}" onclick="markAttendance('${c.id}','${date}','${sid}','P')">Present</button>
+              <button class="attend-btn t ${status==='T'?'on':''}" onclick="markAttendance('${c.id}','${date}','${sid}','T')">Tardy</button>
+              <button class="attend-btn a ${status==='A'?'on':''}" onclick="markAttendance('${c.id}','${date}','${sid}','A')">Absent</button>
+            </div>
+          </td></tr>`;
+        }).join('')}
+        </tbody>
+      </table></div>`}
+    </div>
+  `;
+}
+function markAttendance(classId, date, studentId, status){
+  if(!db.attendance[classId]) db.attendance[classId] = {};
+  if(!db.attendance[classId][date]) db.attendance[classId][date] = {};
+  const cur = db.attendance[classId][date][studentId];
+  db.attendance[classId][date][studentId] = (cur===status) ? undefined : status;
+  if(db.attendance[classId][date][studentId]===undefined) delete db.attendance[classId][date][studentId];
+  saveDB();
+  renderPage();
+}
+
+/* ======================= STUDENT / PARENT ======================= */
+function linkedStudent(user){ return user.linkedStudentId ? studentById(user.linkedStudentId) : null; }
+
+function pageStudentDashboard(user){
+  const s = linkedStudent(user);
+  if(!s){
+    return `<div class="page-head"><div><h1>Welcome, ${esc(user.fullName)}</h1></div></div><div class="card"><div class="empty"><div class="big">🔍</div>No student record is linked to this account yet.<br>Ask your district admin to link one.</div></div>`;
+  }
+  const classes = classesForStudent(s.id);
+  return `
+    <div class="page-head"><div><h1>${user.role==='parent'?`${esc(s.name)}'s overview`:`Welcome, ${esc(s.name)}`}</h1><p>${esc(s.homeroom)} · Grade ${esc(s.grade)}</p></div></div>
+    <div class="grid grid-2">
+      <div class="card"><h3>Classes</h3>
+        ${classes.map(c=>`<div style="padding:8px 0;border-bottom:1px solid var(--border);"><b style="font-size:13.5px;">${esc(c.name)}</b><div class="kv">Period ${esc(c.period)} · Room ${esc(c.room)}</div></div>`).join('') || '<div class="empty">Not enrolled in any classes yet.</div>'}
+      </div>
+      <div class="card"><h3>Grade snapshot</h3>${gradeSnapshotHtml(s.id, classes)}</div>
+    </div>
+  `;
+}
+function gradeSnapshotHtml(studentId, classes){
+  if(classes.length===0) return '<div class="empty">No classes yet.</div>';
+  return classes.map(c=>{
+    const gb = db.grades[c.id] || {assignments:[],scores:{}};
+    let earned=0, possible=0;
+    gb.assignments.forEach(a=>{ const v=(gb.scores[studentId]||{})[a.id]; if(v!==undefined && v!==''){earned+=Number(v); possible+=Number(a.points);} });
+    const pct = possible>0 ? Math.round((earned/possible)*100) : null;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);"><b style="font-size:13.5px;">${esc(c.name)}</b>${pct===null?'<span class="kv">No grades yet</span>':`<span class="badge ${pct>=90?'badge-emerald':pct>=70?'badge-gold':'badge-garnet'}">${pct}%</span>`}</div>`;
+  }).join('');
+}
+
+function pageStudentGrades(user){
+  const s = linkedStudent(user);
+  if(!s) return `<div class="page-head"><div><h1>Grades</h1></div></div><div class="card"><div class="empty">No student record linked yet.</div></div>`;
+  const classes = classesForStudent(s.id);
+  return `
+    <div class="page-head"><div><h1>${user.role==='parent'?`${esc(s.name)}'s grades`:'My grades'}</h1></div></div>
+    ${classes.map(c=>{
+      const gb = db.grades[c.id] || {assignments:[],scores:{}};
+      return `<div class="card"><h3>${esc(c.name)}</h3>
+        ${gb.assignments.length===0 ? '<div class="empty">No assignments graded yet.</div>' : `
+        <div class="table-wrap"><table><thead><tr><th>Assignment</th><th>Score</th></tr></thead><tbody>
+        ${gb.assignments.map(a=>{ const v=(gb.scores[s.id]||{})[a.id]; return `<tr><td>${esc(a.name)}</td><td>${v!==undefined&&v!==''?`${v} / ${a.points}`:'<span class="kv">Not graded</span>'}</td></tr>`; }).join('')}
+        </tbody></table></div>`}
+      </div>`;
+    }).join('') || '<div class="card"><div class="empty">Not enrolled in any classes yet.</div></div>'}
+  `;
+}
+
+function pageStudentAttendance(user){
+  const s = linkedStudent(user);
+  if(!s) return `<div class="page-head"><div><h1>Attendance</h1></div></div><div class="card"><div class="empty">No student record linked yet.</div></div>`;
+  const classes = classesForStudent(s.id);
+  return `
+    <div class="page-head"><div><h1>${user.role==='parent'?`${esc(s.name)}'s attendance`:'My attendance'}</h1></div></div>
+    ${classes.map(c=>{
+      const att = db.attendance[c.id] || {};
+      const dates = Object.keys(att).filter(d=>att[d][s.id]).sort().reverse();
+      return `<div class="card"><h3>${esc(c.name)}</h3>
+        ${dates.length===0 ? '<div class="empty">No attendance recorded yet.</div>' : `
+        <div class="table-wrap"><table><thead><tr><th>Date</th><th>Status</th></tr></thead><tbody>
+        ${dates.map(d=>{ const st=att[d][s.id]; const lbl = st==='P'?'Present':st==='T'?'Tardy':'Absent'; const cls = st==='P'?'badge-emerald':st==='T'?'badge-gold':'badge-garnet'; return `<tr><td>${esc(d)}</td><td><span class="badge ${cls}">${lbl}</span></td></tr>`; }).join('')}
+        </tbody></table></div>`}
+      </div>`;
+    }).join('') || '<div class="card"><div class="empty">Not enrolled in any classes yet.</div></div>'}
+  `;
+}
+
+function pageStudentSchedule(user){
+  const s = linkedStudent(user);
+  if(!s) return `<div class="page-head"><div><h1>Schedule</h1></div></div><div class="card"><div class="empty">No student record linked yet.</div></div>`;
+  const classes = classesForStudent(s.id).slice().sort((a,b)=>String(a.period).localeCompare(String(b.period)));
+  return `
+    <div class="page-head"><div><h1>${user.role==='parent'?`${esc(s.name)}'s schedule`:'My schedule'}</h1></div></div>
+    <div class="card">
+      ${classes.length===0 ? '<div class="empty">Not enrolled in any classes yet.</div>' : `
+      <div class="table-wrap"><table><thead><tr><th>Period</th><th>Class</th><th>Subject</th><th>Room</th><th>Teacher</th></tr></thead><tbody>
+      ${classes.map(c=>{ const t=db.users.find(u=>u.id===c.teacherId); return `<tr><td>${esc(c.period)}</td><td><b>${esc(c.name)}</b></td><td>${esc(c.subject||'—')}</td><td>${esc(c.room)}</td><td>${t?esc(t.fullName):'—'}</td></tr>`; }).join('')}
+      </tbody></table></div>`}
+    </div>
+  `;
+}
+
+/* ======================= INIT ======================= */
+(function init(){
+  const user = currentUser();
+  if(user) boot();
+})();
+</script>
+</body>
+</html>
